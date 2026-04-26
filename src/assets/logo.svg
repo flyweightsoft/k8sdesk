@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" fill="none" role="img" aria-label="k8sdesk logo">
+  <!-- k8s helm wheel -->
+  <circle cx="32" cy="26" r="18" stroke="#326CE5" stroke-width="4"/>
+  <!-- 7 spokes (evenly spaced at 360/7 ≈ 51.43° apart, starting from 12 o'clock) -->
+  <line x1="32"    y1="20.5" x2="32"    y2="10"    stroke="#326CE5" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="36.30" y1="22.57" x2="44.51" y2="16.02" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="37.36" y1="27.22" x2="47.60" y2="29.56" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="34.39" y1="30.96" x2="38.94" y2="40.42" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="29.61" y1="30.96" x2="25.06" y2="40.42" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="26.64" y1="27.22" x2="16.40" y2="29.56" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="27.70" y1="22.57" x2="19.49" y2="16.02" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Center hub -->
+  <circle cx="32" cy="26" r="5" fill="#326CE5"/>
+  <!-- Desk — tabletop sits 8px below the wheel bottom (26+18=44 → 52) -->
+  <rect x="4"  y="52" width="56" height="5"  rx="2.5" fill="#326CE5"/>
+  <!-- Left leg -->
+  <rect x="10" y="57" width="5"  height="11" rx="2"   fill="#326CE5"/>
+  <!-- Right leg -->
+  <rect x="49" y="57" width="5"  height="11" rx="2"   fill="#326CE5"/>
+</svg>

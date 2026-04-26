@@ -1,0 +1,36 @@
+<div class="backdrop" [class.prod]="request.environment === 'prod'">
+  <div class="dialog">
+    <header>
+      <span class="env-badge env-{{ request.environment }}">{{ request.environment }}</span>
+      <h2>Confirm destructive action</h2>
+    </header>
+
+    <div class="cluster">
+      <div class="label">Target cluster</div>
+      <div class="value">{{ request.cluster_name }}</div>
+    </div>
+
+    <div class="action">
+      <div class="label">Action</div>
+      <div class="value mono">{{ request.action_summary }}</div>
+    </div>
+
+    @if (request.require_typed_name) {
+      <div class="typed">
+        <label>Type the cluster name <code>{{ request.cluster_name }}</code> to confirm:</label>
+        <input
+          type="text"
+          [ngModel]="typed()"
+          (ngModelChange)="typed.set($event)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+    }
+
+    <div class="actions">
+      <button (click)="cancel()">Cancel</button>
+      <button class="danger" [disabled]="!canProceed()" (click)="proceed()">Run anyway</button>
+    </div>
+  </div>
+</div>

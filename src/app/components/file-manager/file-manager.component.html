@@ -1,0 +1,183 @@
+<div class="fm">
+
+  <!-- ── Left sidebar: header + tree ───────────────────────────────────── -->
+  <div class="fm-sidebar">
+
+    <!-- Header -->
+    <div class="fm-header">
+      <span class="fm-title">
+        @if (rootPath()) {
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          {{ rootName() }}
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          Files
+        }
+      </span>
+      @if (rootPath()) {
+        <button class="fm-icon-btn" title="Change folder" (click)="assignFolder()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </button>
+      }
+    </div>
+
+    <!-- Error banner -->
+    @if (errorMsg(); as err) {
+      <div class="fm-error">
+        <span>{{ err }}</span>
+        <button (click)="errorMsg.set(null)">×</button>
+      </div>
+    }
+
+    <!-- Empty state (no folder assigned) -->
+    @if (!rootPath() && !loading()) {
+      <div class="fm-empty">
+        <div class="fm-empty-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               class="fm-empty-icon">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="fm-empty-label">No folder assigned</span>
+          <span class="fm-empty-sub">Assign a folder to this cluster to browse YAML files.</span>
+          <button class="fm-assign-btn" (click)="assignFolder()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Assign Folder
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="fm-empty">
+        <span class="fm-loading-text">Loading…</span>
+      </div>
+    }
+
+    <!-- File tree -->
+    @if (rootPath() && !loading()) {
+      <div class="fm-tree">
+        @for (item of flatNodes(); track item.entry.path) {
+          <div
+            class="fm-node"
+            [class.fm-node--dir]="item.entry.isDir"
+            [class.fm-node--active]="activeTabPath() === item.entry.path"
+            [style.padding-left.px]="item.depth * 14 + 6"
+            [title]="item.entry.path"
+            (click)="clickNode(item.entry)"
+          >
+            @if (item.entry.isDir) {
+              <span class="fm-chevron">{{ isExpanded(item.entry.path) ? '▾' : '▸' }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="fm-node-icon fm-node-icon--dir">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+            } @else {
+              <span class="fm-chevron fm-chevron--file"></span>
+              @if (isYaml(item.entry.name)) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="fm-node-icon fm-node-icon--yaml">
+                  <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="fm-node-icon">
+                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                  <polyline points="13 2 13 9 20 9"/>
+                </svg>
+              }
+            }
+            <span class="fm-node-name">{{ item.entry.name }}</span>
+          </div>
+        }
+
+        @if (!flatNodes().length) {
+          <div class="fm-tree-empty">Empty folder</div>
+        }
+      </div>
+    }
+
+  </div><!-- /.fm-sidebar -->
+
+  <!-- ── Right: editor area (tabs + Monaco + actions) ──────────────────── -->
+  @if (openTabs().length) {
+    <div class="fm-editor-area">
+
+      <!-- Tab bar -->
+      <div class="fm-tabs">
+        @for (tab of openTabs(); track tab.path) {
+          <div
+            class="fm-tab"
+            [class.fm-tab--active]="activeTabPath() === tab.path"
+            [title]="tab.path"
+            (click)="activateTab(tab.path)"
+          >
+            <span class="fm-tab-name">{{ tab.name }}</span>
+            @if (tab.dirty) {
+              <span class="fm-tab-dot" title="Unsaved changes">●</span>
+            }
+            <button class="fm-tab-close" (click)="closeTab(tab.path, $event)" title="Close">×</button>
+          </div>
+        }
+      </div>
+
+      <!-- Monaco editor -->
+      <div class="fm-monaco-wrap">
+        <ngx-monaco-editor
+          class="fm-monaco"
+          [options]="editorOptions()"
+          [(ngModel)]="editorContent"
+        ></ngx-monaco-editor>
+      </div>
+
+      <!-- Action bar -->
+      <div class="fm-action-bar">
+        <button
+          class="fm-btn fm-btn--save"
+          [disabled]="!activeTab()?.dirty"
+          (click)="saveActiveFile()"
+          title="Save file (⌘S / Ctrl+S)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          Save
+        </button>
+        <button
+          class="fm-btn fm-btn--apply"
+          [disabled]="!activeTab() || !isYaml(activeTab()!.path)"
+          (click)="applyActive()"
+          title="Apply to cluster (kubectl apply)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Apply to Cluster
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>

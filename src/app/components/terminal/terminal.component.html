@@ -1,0 +1,198 @@
+<div class="term">
+  @if (history.length) {
+    <div class="term-toolbar">
+      <span class="term-count">{{ history.length }} entr{{ history.length === 1 ? 'y' : 'ies' }}</span>
+      <div class="toolbar-spacer"></div>
+      @if (confirmClearAll()) {
+        <div class="inline-confirm">
+          <span class="inline-confirm-label">Clear all output?</span>
+          <button class="inline-confirm-yes" (click)="confirmClearAllNow()">Yes, clear</button>
+          <button class="inline-confirm-no" (click)="cancelClearAll()">Cancel</button>
+        </div>
+      } @else {
+        <button class="clear-all-btn" (click)="requestClearAll()" title="Clear all terminal output">
+          ⌫ Clear all
+        </button>
+      }
+    </div>
+  }
+
+  <div class="scroll" #scroll>
+    @for (group of groups; track group.startIdx) {
+      <div class="group-wrap">
+
+        @if (group.input) {
+          <div class="line input">
+            <span class="prompt-tag">
+              <span class="prompt-cluster">{{ group.input.cluster }}</span>
+              <span class="prompt-sep">/</span>
+              <span class="prompt-ns">{{ group.input.namespace }}</span>
+              <span class="prompt-dollar">$</span>
+            </span>
+            <span class="cmd-text">{{ group.input.text }}</span>
+          </div>
+        }
+
+        @for (f of group.followups; track f.idx) {
+          @switch (f.entry.kind) {
+
+            @case ('error') {
+              <div class="line error">
+                <span class="badge badge-error">ERR</span>
+                {{ f.entry.text }}
+              </div>
+            }
+
+            @case ('output') {
+              <div class="output-block" [class.destructive]="f.entry.severity === 'destructive'">
+
+                @switch (f.entry.output.kind) {
+
+                  @case ('table') {
+                    <div class="table-wrap">
+                      <button class="copy-btn" (click)="copy(tableText(f.entry.output.headers, f.entry.output.rows), f.idx)"
+                              [class.copied]="copiedIdx() === f.idx" title="Copy as text">
+                        {{ copiedIdx() === f.idx ? '✓ copied' : '⎘ copy' }}
+                      </button>
+                      <table class="kube-table">
+                        <thead>
+                          <tr>
+                            @for (h of f.entry.output.headers; track $index) {
+                              <th [class.status-col]="isStatusHeader(h)">{{ h }}</th>
+                            }
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (row of f.entry.output.rows; track $index) {
+                            <tr>
+                              @for (cell of row; let ci = $index; track ci) {
+                                <td>
+                                  @let sc = statusClass(cell, f.entry.output.headers[ci] ?? '');
+                                  @if (sc) {
+                                    <span class="badge" [ngClass]="sc">{{ cell }}</span>
+                                  } @else {
+                                    {{ cell }}
+                                  }
+                                </td>
+                              }
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                      <div class="table-footer">{{ f.entry.output.rows.length }} row{{ f.entry.output.rows.length === 1 ? '' : 's' }}</div>
+                    </div>
+                  }
+
+                  @case ('yaml') {
+                    <div class="yaml-wrap">
+                      <button class="copy-btn" (click)="copy(f.entry.output.body, f.idx)"
+                              [class.copied]="copiedIdx() === f.idx" title="Copy YAML">
+                        {{ copiedIdx() === f.idx ? '✓ copied' : '⎘ copy' }}
+                      </button>
+                      <div class="lang-tag">YAML</div>
+                      <pre class="line output yaml" [innerHTML]="yamlHtml(f.entry.output.body)"></pre>
+                    </div>
+                  }
+
+                  @case ('text') {
+                    <div class="text-wrap">
+                      <button class="copy-btn" (click)="copy(f.entry.output.body, f.idx)"
+                              [class.copied]="copiedIdx() === f.idx" title="Copy text">
+                        {{ copiedIdx() === f.idx ? '✓ copied' : '⎘ copy' }}
+                      </button>
+                      <pre class="line output">{{ f.entry.output.body }}</pre>
+                    </div>
+                  }
+
+                  @case ('ok') {
+                    <div class="line ok">
+                      <span class="ok-icon">✓</span>
+                      <span>{{ f.entry.output.message }}</span>
+                    </div>
+                  }
+
+                }
+              </div>
+            }
+
+          }
+        }
+
+        @if (confirmClearGroupIdx() === group.startIdx) {
+          <div class="inline-confirm group-confirm">
+            <span class="inline-confirm-label">Remove this command?</span>
+            <button class="inline-confirm-yes" (click)="confirmClearGroupNow()">Yes</button>
+            <button class="inline-confirm-no" (click)="cancelClearGroup()">Cancel</button>
+          </div>
+        } @else {
+          <button class="group-del" (click)="requestClearGroup(group.startIdx)" title="Clear this command">×</button>
+        }
+      </div>
+    }
+
+    @if (!history.length) {
+      <div class="hint">
+        <div class="hint-title">⎈ k8sdesk Terminal</div>
+        <div class="hint-body">Type <code>help</code> to list commands. Cluster + namespace are auto-applied.</div>
+        <div class="hint-chips">
+          <span class="chip">get pods</span>
+          <span class="chip">get deployments</span>
+          <span class="chip">logs &lt;pod&gt; -f</span>
+          <span class="chip">describe pod &lt;name&gt;</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <form class="prompt-bar" (ngSubmit)="submit()">
+    <span class="prompt-glyph">›</span>
+    <div class="input-wrap">
+      @if (ghostRest()) {
+        <span class="ghost" aria-hidden="true">
+          <span class="ghost-typed">{{ input() }}</span><span class="ghost-rest">{{ ghostRest() }}</span>
+        </span>
+      }
+      <input
+        type="text"
+        [ngModel]="input()"
+        (ngModelChange)="input.set($event)"
+        [disabled]="disabled"
+        (keydown)="onKey($event)"
+        name="cmd"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="get pods · logs my-pod -f · scale deploy/api --replicas 3"
+        autofocus
+      />
+    </div>
+    @if (acMatches().length) {
+      <div class="ac-pills">
+        @for (m of acMatches(); track $index) {
+          <span class="ac-pill" [class.active]="acIdx() === $index">{{ m }}</span>
+        }
+      </div>
+    }
+    <button type="submit" class="run-btn" [disabled]="disabled">
+      <span>▶</span> Run
+    </button>
+  </form>
+</div>
+
+@if (applyOpen()) {
+  <div class="modal-backdrop">
+    <div class="modal">
+      <h3>Paste manifest for <code>apply paste:{{ applyId() }}</code></h3>
+      <p class="muted">YAML is applied with server-side apply into the selected namespace. <b>metadata.namespace is forced</b> to the active namespace.</p>
+      <textarea
+        rows="16"
+        [ngModel]="applyBody()"
+        (ngModelChange)="applyBody.set($event)"
+        placeholder="apiVersion: v1&#10;kind: ConfigMap&#10;metadata:&#10;  name: my-cm&#10;data:&#10;  key: value"
+      ></textarea>
+      <div class="actions">
+        <button (click)="cancelApply()">Cancel</button>
+        <button class="primary" (click)="submitApply()">Continue</button>
+      </div>
+    </div>
+  </div>
+}

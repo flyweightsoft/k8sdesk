@@ -1,0 +1,58 @@
+.backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2000;
+}
+.backdrop.prod {
+  background: rgba(60, 0, 0, 0.75);
+}
+.dialog {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 520px;
+  max-width: 90%;
+  padding: 18px 20px;
+}
+.backdrop.prod .dialog {
+  border: 2px solid var(--env-prod);
+  box-shadow: 0 0 30px rgba(248, 81, 73, 0.4);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+header h2 { margin: 0; font-size: 16px; }
+
+.cluster, .action, .typed {
+  margin-bottom: 12px;
+}
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.value { font-size: 14px; font-weight: 600; }
+.value.mono { font-family: "SF Mono", Menlo, monospace; font-weight: 500; }
+
+.typed input {
+  width: 100%;
+  margin-top: 6px;
+}
+.typed code {
+  background: var(--panel-2);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}

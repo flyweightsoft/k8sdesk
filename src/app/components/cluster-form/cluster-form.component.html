@@ -1,0 +1,113 @@
+<div class="backdrop">
+  <div class="dialog">
+    <header>
+      <h2>{{ editing ? 'Edit cluster' : 'Add cluster' }}</h2>
+      <div class="tabs">
+        <button
+          [class.active]="mode() === 'manual'"
+          (click)="mode.set('manual')"
+        >Manual</button>
+        <button
+          [class.active]="mode() === 'kubeconfig'"
+          (click)="mode.set('kubeconfig')"
+        >Paste kubeconfig</button>
+      </div>
+    </header>
+
+    <div class="row">
+      <label>Name</label>
+      <input [ngModel]="name()" (ngModelChange)="name.set($event)" placeholder="prod-eu" />
+    </div>
+
+    <div class="row">
+      <label>Environment</label>
+      <select [ngModel]="environment()" (ngModelChange)="environment.set($event)">
+        <option value="dev">dev</option>
+        <option value="staging">staging</option>
+        <option value="prod">prod</option>
+      </select>
+      <span class="env-badge env-{{ environment() }}">{{ environment() }}</span>
+    </div>
+
+    @if (mode() === 'manual') {
+      <div class="row">
+        <label>API server URL</label>
+        <input [ngModel]="apiServer()" (ngModelChange)="apiServer.set($event)" placeholder="https://api.example.com:6443" />
+      </div>
+
+      <div class="row">
+        <label>Default namespace</label>
+        <input [ngModel]="defaultNamespace()" (ngModelChange)="defaultNamespace.set($event)" />
+      </div>
+
+      <div class="row">
+        <label>CA certificate (PEM)</label>
+        <textarea
+          rows="4"
+          [ngModel]="caPem()"
+          (ngModelChange)="caPem.set($event)"
+          [placeholder]="editing ? 'leave empty to keep stored CA' : '-----BEGIN CERTIFICATE-----\n...'"
+        ></textarea>
+      </div>
+
+      <div class="row inline">
+        <label><input type="checkbox" [ngModel]="insecure()" (ngModelChange)="insecure.set($event)" /> Skip TLS verify (insecure)</label>
+      </div>
+
+      <div class="row">
+        <label>Authentication</label>
+        <select [ngModel]="authKind()" (ngModelChange)="authKind.set($event)">
+          <option value="bearer_token">Bearer token</option>
+          <option value="client_cert">Client certificate</option>
+        </select>
+      </div>
+
+      @if (authKind() === 'bearer_token') {
+        <div class="row">
+          <label>Token</label>
+          <input
+            type="password"
+            [ngModel]="token()"
+            (ngModelChange)="token.set($event)"
+            [placeholder]="editing ? '••••••• (stored — type to replace)' : 'service account token'"
+          />
+        </div>
+      } @else {
+        <div class="row">
+          <label>Client certificate (PEM)</label>
+          <textarea rows="4" [ngModel]="certPem()" (ngModelChange)="certPem.set($event)"></textarea>
+        </div>
+        <div class="row">
+          <label>Client key (PEM)</label>
+          <textarea rows="4" [ngModel]="keyPem()" (ngModelChange)="keyPem.set($event)"></textarea>
+        </div>
+      }
+    } @else {
+      <div class="row">
+        <label>Paste kubeconfig YAML</label>
+        <textarea
+          rows="14"
+          [ngModel]="kcYaml()"
+          (ngModelChange)="kcYaml.set($event)"
+          placeholder="apiVersion: v1&#10;kind: Config&#10;…"
+        ></textarea>
+        <small class="muted">
+          Only static credentials are accepted. <code>exec</code> and <code>auth-provider</code>
+          plugins are rejected. The current-context's cluster + user are imported.
+          {{ editing ? 'Pasting a new kubeconfig will replace all credentials for this cluster.' : '' }}
+        </small>
+      </div>
+    }
+
+    @if (errorMsg(); as e) {
+      <div class="error">{{ e }}</div>
+    }
+
+    <div class="actions">
+      <button (click)="cancel()" [disabled]="saving()">Cancel</button>
+      <button class="primary" (click)="save()" [disabled]="saving()">
+        {{ saving() ? 'Saving…' : (editing ? 'Save' : 'Add') }}
+      </button>
+    </div>
+  </div>
+</div>

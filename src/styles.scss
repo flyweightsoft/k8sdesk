@@ -1,0 +1,301 @@
+/* ── Theme: GitHub Dark (default) ─────────────────────────────────────────── */
+:root,
+[data-theme="github-dark"] {
+  --bg:      #0d1117;
+  --panel:   #161b22;
+  --panel-2: #1f242c;
+  --text:    #e6edf3;
+  --muted:   #8b949e;
+  --dim:     #484f58;
+  --border:  #30363d;
+  --accent:  #58a6ff;
+
+  /* terminal */
+  --term-bg:             #07090f;
+  --term-toolbar-bg:     #0d1117;
+  --term-text:           #c9d1d9;
+  --term-border:         #21262d;
+  --term-scrollbar:      #2d333b;
+  --term-group-hover:    rgba(255,255,255,0.02);
+  --term-prompt-bar-bg:  #0d1117;
+  --term-output-bg:      #0d1117;
+
+  /* semantic colours */
+  --color-ok:               #7ee787;
+  --color-ok-bg:            rgba(46,160,67,0.08);
+  --color-ok-border:        #2ea043;
+  --color-error:            #ffa198;
+  --color-error-bg:         rgba(248,81,73,0.08);
+  --color-error-border:     #f85149;
+  --color-warn:             #f0883e;
+  --color-warn-bg:          rgba(240,136,62,0.12);
+  --color-warn-border:      rgba(240,136,62,0.3);
+  --color-pending:          #d2a200;
+  --color-pending-bg:       rgba(210,174,10,0.12);
+  --color-pending-border:   rgba(210,174,10,0.3);
+  --color-accent-dim:       #a5d6ff;
+  --color-dollar:           #7ee787;
+
+  /* yaml syntax */
+  --yaml-key:     #79c0ff;
+  --yaml-punct:   #ff7b72;
+  --yaml-value:   #c9d1d9;
+  --yaml-string:  #a5d6ff;
+  --yaml-number:  #d2a8ff;
+  --yaml-bool:    #f0883e;
+  --yaml-null:    #ff7b72;
+  --yaml-comment: #7ee787;
+
+  --env-dev:     #2ea043;
+  --env-staging: #d29922;
+  --env-prod:    #f85149;
+}
+
+/* ── Theme: Midnight ──────────────────────────────────────────────────────── */
+[data-theme="midnight"] {
+  --bg:      #080c14;
+  --panel:   #0e1420;
+  --panel-2: #141c2c;
+  --text:    #dde3ef;
+  --muted:   #7481a0;
+  --dim:     #3d4a62;
+  --border:  #1d2840;
+  --accent:  #7c9ef5;
+
+  --term-bg:             #04070d;
+  --term-toolbar-bg:     #080c14;
+  --term-text:           #bec8de;
+  --term-border:         #152030;
+  --term-scrollbar:      #1d2840;
+  --term-group-hover:    rgba(255,255,255,0.025);
+  --term-prompt-bar-bg:  #080c14;
+  --term-output-bg:      #080c14;
+
+  --color-ok:               #5fd77b;
+  --color-ok-bg:            rgba(56,160,67,0.10);
+  --color-ok-border:        #2a8c46;
+  --color-error:            #ff9393;
+  --color-error-bg:         rgba(220,60,60,0.10);
+  --color-error-border:     #cc3b3b;
+  --color-warn:             #f0a050;
+  --color-warn-bg:          rgba(240,160,80,0.12);
+  --color-warn-border:      rgba(240,160,80,0.3);
+  --color-pending:          #c8a030;
+  --color-pending-bg:       rgba(200,160,48,0.12);
+  --color-pending-border:   rgba(200,160,48,0.3);
+  --color-accent-dim:       #a5beff;
+  --color-dollar:           #5fd77b;
+
+  --yaml-key:     #6db4ff;
+  --yaml-punct:   #ff7070;
+  --yaml-value:   #bec8de;
+  --yaml-string:  #90c4ff;
+  --yaml-number:  #c49dff;
+  --yaml-bool:    #f0a050;
+  --yaml-null:    #ff7070;
+  --yaml-comment: #5fd77b;
+
+  --env-dev:     #2a8c46;
+  --env-staging: #b08010;
+  --env-prod:    #cc3b3b;
+}
+
+/* ── Theme: GitHub Light ──────────────────────────────────────────────────── */
+[data-theme="github-light"] {
+  --bg:      #ffffff;
+  --panel:   #f6f8fa;
+  --panel-2: #edf0f3;
+  --text:    #1f2328;
+  --muted:   #636c76;
+  --dim:     #8c959f;
+  --border:  #d0d7de;
+  --accent:  #0969da;
+
+  --term-bg:             #f0f3f6;
+  --term-toolbar-bg:     #f6f8fa;
+  --term-text:           #1f2328;
+  --term-border:         #d0d7de;
+  --term-scrollbar:      #c0c8d2;
+  --term-group-hover:    rgba(0,0,0,0.03);
+  --term-prompt-bar-bg:  #f6f8fa;
+  --term-output-bg:      #f6f8fa;
+
+  --color-ok:               #1a7f37;
+  --color-ok-bg:            rgba(26,127,55,0.08);
+  --color-ok-border:        #1a7f37;
+  --color-error:            #cf222e;
+  --color-error-bg:         rgba(207,34,46,0.07);
+  --color-error-border:     #cf222e;
+  --color-warn:             #953800;
+  --color-warn-bg:          rgba(149,56,0,0.07);
+  --color-warn-border:      rgba(149,56,0,0.35);
+  --color-pending:          #7a5400;
+  --color-pending-bg:       rgba(122,84,0,0.08);
+  --color-pending-border:   rgba(122,84,0,0.3);
+  --color-accent-dim:       #0550ae;
+  --color-dollar:           #1a7f37;
+
+  --yaml-key:     #0550ae;
+  --yaml-punct:   #cf222e;
+  --yaml-value:   #1f2328;
+  --yaml-string:  #0a3069;
+  --yaml-number:  #8250df;
+  --yaml-bool:    #953800;
+  --yaml-null:    #cf222e;
+  --yaml-comment: #1a7f37;
+
+  --env-dev:     #1a7f37;
+  --env-staging: #7a5400;
+  --env-prod:    #cf222e;
+}
+
+/* ── Theme: Solarized Dark ────────────────────────────────────────────────── */
+[data-theme="solarized-dark"] {
+  --bg:      #002b36;
+  --panel:   #073642;
+  --panel-2: #0a4050;
+  --text:    #93a1a1;
+  --muted:   #586e75;
+  --dim:     #4a6570;
+  --border:  #094553;
+  --accent:  #268bd2;
+
+  --term-bg:             #00212a;
+  --term-toolbar-bg:     #002b36;
+  --term-text:           #839496;
+  --term-border:         #073642;
+  --term-scrollbar:      #094553;
+  --term-group-hover:    rgba(255,255,255,0.03);
+  --term-prompt-bar-bg:  #002b36;
+  --term-output-bg:      #002b36;
+
+  --color-ok:               #859900;
+  --color-ok-bg:            rgba(133,153,0,0.13);
+  --color-ok-border:        rgba(133,153,0,0.5);
+  --color-error:            #dc322f;
+  --color-error-bg:         rgba(220,50,47,0.12);
+  --color-error-border:     rgba(220,50,47,0.5);
+  --color-warn:             #cb4b16;
+  --color-warn-bg:          rgba(203,75,22,0.12);
+  --color-warn-border:      rgba(203,75,22,0.4);
+  --color-pending:          #b58900;
+  --color-pending-bg:       rgba(181,137,0,0.12);
+  --color-pending-border:   rgba(181,137,0,0.35);
+  --color-accent-dim:       #2aa198;
+  --color-dollar:           #859900;
+
+  --yaml-key:     #268bd2;
+  --yaml-punct:   #dc322f;
+  --yaml-value:   #839496;
+  --yaml-string:  #2aa198;
+  --yaml-number:  #d33682;
+  --yaml-bool:    #cb4b16;
+  --yaml-null:    #dc322f;
+  --yaml-comment: #586e75;
+
+  --env-dev:     #859900;
+  --env-staging: #b58900;
+  --env-prod:    #dc322f;
+}
+
+/* ── Theme: One Light ─────────────────────────────────────────────────────── */
+[data-theme="one-light"] {
+  --bg:      #fafafa;
+  --panel:   #f0f0f0;
+  --panel-2: #e5e5e5;
+  --text:    #383a42;
+  --muted:   #696c77;
+  --dim:     #a0a1a7;
+  --border:  #d3d3d3;
+  --accent:  #4078f2;
+
+  --term-bg:             #f5f5f5;
+  --term-toolbar-bg:     #f0f0f0;
+  --term-text:           #383a42;
+  --term-border:         #d3d3d3;
+  --term-scrollbar:      #c4c4c4;
+  --term-group-hover:    rgba(0,0,0,0.03);
+  --term-prompt-bar-bg:  #f0f0f0;
+  --term-output-bg:      #f0f0f0;
+
+  --color-ok:               #50a14f;
+  --color-ok-bg:            rgba(80,161,79,0.09);
+  --color-ok-border:        rgba(80,161,79,0.45);
+  --color-error:            #ca1243;
+  --color-error-bg:         rgba(202,18,67,0.08);
+  --color-error-border:     rgba(202,18,67,0.4);
+  --color-warn:             #c18401;
+  --color-warn-bg:          rgba(193,132,1,0.09);
+  --color-warn-border:      rgba(193,132,1,0.4);
+  --color-pending:          #a626a4;
+  --color-pending-bg:       rgba(166,38,164,0.08);
+  --color-pending-border:   rgba(166,38,164,0.3);
+  --color-accent-dim:       #526fff;
+  --color-dollar:           #50a14f;
+
+  --yaml-key:     #e45649;
+  --yaml-punct:   #383a42;
+  --yaml-value:   #383a42;
+  --yaml-string:  #50a14f;
+  --yaml-number:  #986801;
+  --yaml-bool:    #0184bc;
+  --yaml-null:    #e45649;
+  --yaml-comment: #a0a1a7;
+
+  --env-dev:     #50a14f;
+  --env-staging: #c18401;
+  --env-prod:    #ca1243;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100vh;
+  font-family: -apple-system, "SF Pro", "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+button:hover { background: var(--border); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.danger { background: var(--color-error-bg); border-color: var(--color-error-border); color: var(--color-error); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button.primary:hover { filter: brightness(1.12); }
+
+input, select, textarea {
+  font: inherit;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 8px;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.env-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+.env-dev { background: var(--env-dev); }
+.env-staging { background: var(--env-staging); color: #1a1a1a; }
+.env-prod { background: var(--env-prod); }
