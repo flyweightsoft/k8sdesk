@@ -8,6 +8,7 @@
 //! - Secrets in memory are wrapped in `Zeroizing` and dropped when no longer
 //!   needed. Cluster records returned to the frontend are redacted.
 
+#[cfg(unix)]
 use std::os::unix::fs::PermissionsExt;
 use std::path::{Path, PathBuf};
 
@@ -261,6 +262,7 @@ fn load_or_create_master_key(app_dir: &Path) -> AppResult<Zeroizing<[u8; 32]>> {
     let b64 = B64.encode(key.as_ref());
     std::fs::write(&key_path, &b64)?;
     // Restrict key file to owner read/write only.
+    #[cfg(unix)]
     std::fs::set_permissions(&key_path, std::fs::Permissions::from_mode(0o600))?;
     let _ = entry.set_password(&b64);
     Ok(key)
