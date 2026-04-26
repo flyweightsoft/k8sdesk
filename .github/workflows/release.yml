@@ -52,7 +52,7 @@ jobs:
             patchelf
 
       - name: Install frontend deps
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build & bundle
         uses: tauri-apps/tauri-action@v0
