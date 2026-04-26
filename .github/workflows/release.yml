@@ -1,10 +1,12 @@
 name: Release
 
 # Trigger: push a tag like v1.0.0  →  git tag v1.0.0 && git push origin v1.0.0
+# Or run manually via the Actions tab (artifacts uploaded, no Release created).
 on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,17 +17,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # macOS — produces .dmg + .app
+          # macOS universal — produces .dmg (+ .app)
           - platform: macos-latest
-            args: '--target universal-apple-darwin'
+            args: '--target universal-apple-darwin --bundles dmg,app'
+            rust-targets: 'aarch64-apple-darwin,x86_64-apple-darwin'
 
-          # Windows — produces .msi + .exe (NSIS)
+          # Windows — produces NSIS .exe installer
           - platform: windows-latest
-            args: ''
+            args: '--bundles nsis'
+            rust-targets: ''
 
-          # Linux — produces .AppImage + .deb
+          # Linux — produces .deb
           - platform: ubuntu-22.04
-            args: ''
+            args: '--bundles deb'
+            rust-targets: ''
 
     runs-on: ${{ matrix.platform }}
 
@@ -41,8 +46,12 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          # Universal binary requires both macOS targets
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.rust-targets }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
 
       - name: Install Linux system deps
         if: matrix.platform == 'ubuntu-22.04'
@@ -50,18 +59,25 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             libwebkit2gtk-4.1-dev \
-            libappindicator3-dev \
             librsvg2-dev \
-            patchelf
+            patchelf \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            libsoup-3.0-dev \
+            libjavascriptcoregtk-4.1-dev
 
       - name: Install frontend deps
         run: npm ci --legacy-peer-deps
 
-      - name: Build & bundle
+      - name: Build & bundle (Tauri)
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Optional: Apple code-signing
+          # Optional: Apple code-signing / notarization
           # APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
           # APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
           # APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
@@ -77,9 +93,22 @@ jobs:
             ### Downloads
             | Platform | File |
             |---|---|
-            | macOS (Apple Silicon + Intel) | `k8sdesk_*.dmg` |
-            | Windows | `k8sdesk_*_x64-setup.exe` or `k8sdesk_*_x64_en-US.msi` |
-            | Linux | `k8sdesk_*_amd64.AppImage` or `k8sdesk_*_amd64.deb` |
+            | macOS (Apple Silicon + Intel) | `k8sdesk_*_universal.dmg` |
+            | Windows                       | `k8sdesk_*_x64-setup.exe` |
+            | Linux                         | `k8sdesk_*_amd64.deb` |
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+
+      # Upload artifacts for manual runs (no tag → no Release)
+      - name: Upload build artifacts
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: k8sdesk-${{ matrix.platform }}
+          if-no-files-found: ignore
+          path: |
+            src-tauri/target/release/bundle/dmg/*.dmg
+            src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg
+            src-tauri/target/release/bundle/nsis/*.exe
+            src-tauri/target/release/bundle/deb/*.deb
