@@ -96,6 +96,8 @@ jobs:
             | macOS (Apple Silicon + Intel) | `k8sdesk_*_universal.dmg` |
             | Windows                       | `k8sdesk_*_x64-setup.exe` |
             | Linux                         | `k8sdesk_*_amd64.deb` |
+
+            > **macOS note:** not notarized yet. On first launch, right-click the app → Open to bypass Gatekeeper, or run `xattr -cr /Applications/k8sdesk.app`.
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
