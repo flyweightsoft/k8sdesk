@@ -226,6 +226,40 @@
 }
 .statusbar .muted { color: var(--muted); }
 
+.statusbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  white-space: nowrap;
+
+  svg {
+    color: inherit;
+    transition: color 0.2s;
+  }
+
+  &:hover {
+    color: #e05777;
+    border-color: #e0577766;
+    background: rgba(224, 87, 119, 0.08);
+
+    svg { color: #e05777; }
+  }
+}
+
 .backdrop {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.7);

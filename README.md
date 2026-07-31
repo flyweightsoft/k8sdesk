@@ -7,8 +7,8 @@
 [![Angular 18](https://img.shields.io/badge/Angular-18-dd0031?logo=angular)](https://angular.dev)
 [![Release](https://img.shields.io/github/v/release/YOUR_GITHUB_USERNAME/k8sdesk?label=latest)](https://github.com/YOUR_GITHUB_USERNAME/k8sdesk/releases/latest)
 
-<a href='https://ko-fi.com/X8X21YHKJ9' target='_blank'>
-  <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+<a href='https://ko-fi.com/flyweightsoft' target='_blank'>
+  <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Support us on Ko-fi' />
 </a>
 
 ---
@@ -173,10 +173,10 @@ Pull requests are welcome. For larger changes please open an issue first to disc
 
 ## Support
 
-If k8sdesk saves you time, consider buying me a coffee ☕
+If k8sdesk is helpful to you, we'd really appreciate your support! It helps us keep the project going 💙
 
-<a href='https://ko-fi.com/X8X21YHKJ9' target='_blank'>
-  <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+<a href='https://ko-fi.com/flyweightsoft' target='_blank'>
+  <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Support us on Ko-fi' />
 </a>
 
 ## License
@@ -298,10 +298,10 @@ Pull requests are welcome. For larger changes please open an issue first to disc
 
 ## Support
 
-If k8sdesk saves you time, consider buying me a coffee ☕
+If k8sdesk is helpful to you, we'd really appreciate your support! It helps us keep the project going 💙
 
-<a href='https://ko-fi.com/X8X21YHKJ9' target='_blank'>
-  <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+<a href='https://ko-fi.com/flyweightsoft' target='_blank'>
+  <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Support us on Ko-fi' />
 </a>
 
 ## License
