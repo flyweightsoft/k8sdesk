@@ -2,6 +2,27 @@
   "name": "k8sdesk",
   "version": "0.1.0",
   "description": "Minimal, isolated, safe Kubernetes desktop client (no system kubectl required)",
+  "keywords": [
+    "kubernetes",
+    "k8s",
+    "gui",
+    "desktop",
+    "client",
+    "kubectl",
+    "alternative",
+    "secure",
+    "tauri",
+    "angular"
+  ],
+  "author": "FlyweightSoft",
+  "homepage": "https://github.com/flyweightsoft/k8sdesk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flyweightsoft/k8sdesk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flyweightsoft/k8sdesk/issues"
+  },
   "private": true,
   "scripts": {
     "ng": "ng",

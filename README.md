@@ -1,7 +1,6 @@
 # k8sdesk
 
-> A minimal, safe Kubernetes desktop client — no system `kubectl` required.
-
+> A minimal, safe Kubernetes GUI and desktop client alternative to kubectl — no system `kubectl` required.
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Built with Tauri](https://img.shields.io/badge/built%20with-Tauri%202-24c8d8?logo=tauri)](https://v2.tauri.app)
 [![Angular 18](https://img.shields.io/badge/Angular-18-dd0031?logo=angular)](https://angular.dev)
@@ -13,8 +12,8 @@
 
 ---
 
-k8sdesk is a **focused Kubernetes operations tool** built to eliminate the risks of using a shared global `kubectl` configuration.
-Credentials stay encrypted on disk, commands go through a strict DSL, and destructive actions require explicit confirmation.
+k8sdesk is a **focused Kubernetes operations tool** and **secure desktop client** built to eliminate the risks of using a shared global `kubectl` configuration.
+Credentials stay encrypted on disk, commands go through a strict DSL, and destructive actions require explicit confirmation. It serves as an isolated Kubernetes GUI for macOS, Windows, and Linux.
 
 ## Downloads
 
@@ -307,3 +306,5 @@ If k8sdesk is helpful to you, we'd really appreciate your support! It helps us k
 ## License
 
 [MIT](LICENSE)
+
+<!-- SEO Keywords: kubernetes gui, k8s desktop client, kubectl alternative, secure kubernetes management, cluster visualization, tauri k8s, rust, angular kubernetes app -->
